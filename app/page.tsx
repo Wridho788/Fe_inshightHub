@@ -34,7 +34,7 @@ export default function Home() {
         <meta property="og:image" content={metadata.image} />
       </Head>
       <ScrollUp />
-      <Hero />
+      {/* <Hero /> */}
       {/* <Blog /> */}
       <BlogSidebarPage />
     </>

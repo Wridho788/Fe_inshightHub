@@ -1,5 +1,5 @@
-"use client"
-import { useEffect, useState } from 'react';
+"use client";
+import { useEffect, useState } from "react";
 import RelatedPost from "@/components/Blog/RelatedPost";
 import SharePost from "@/components/Blog/SharePost";
 import TagButton from "@/components/Blog/TagButton";
@@ -8,34 +8,30 @@ import Image from "next/image";
 
 import SingleBlog from "@/components/Blog/SingleBlog";
 
-
 const BlogSidebarPage = () => {
   const [blog, setBlog] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const fetchData = async () => {
+  const fetchData = async (page) => {
     try {
       const apiKey = process.env.NEWS_API_KEY;
-      console.log(apiKey, 'apikey')
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=technology&apiKey=${apiKey}`
+        `https://newsapi.org/v2/everything?q=technology&apiKey=${apiKey}&page=${page}&pageSize={10}`,
       );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error("Failed to fetch data");
       }
 
       const data = await response.json();
       setBlog(data.articles);
-      console.log(data, 'asdasd')
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
-  // https://newsapi.org/v2/top-headlines?country=id&category=business&apiKey=875c8748eabf4a9a822730ac5e2fc04c
-
 
   useEffect(() => {
-    fetchData();
+    fetchData(1);
   }, []);
   return (
     <>
@@ -44,18 +40,53 @@ const BlogSidebarPage = () => {
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 lg:w-8/12">
               {blog.map((blog) => (
-                <div key={blog.id} className="w-full my-10">
+                <div key={blog.id} className="my-10 w-full">
                   <SingleBlog blog={blog} />
                 </div>
               ))}
+              <div
+                className="wow fadeInUp -mx-4 flex flex-wrap"
+                data-wow-delay=".15s"
+              >
+                <div className="w-full px-4">
+
+                  <div className="mb-10 rounded-sm bg-white shadow-three dark:bg-gray-dark dark:shadow-none">
+                    <div className="px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
+                      Pagination
+                    </div>
+                    <div className="flex justify-center items-center p-4">
+                      <button
+                        onClick={() => {
+                          setCurrentPage(currentPage - 1);
+                          fetchData(currentPage - 1);
+                        }}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-md mr-2"
+                      >
+                        Prev
+                      </button>
+                      <button
+                        onClick={() => {
+                          setCurrentPage(currentPage + 1);
+                          fetchData(currentPage + 1);
+                        }}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <div className="w-full px-4 lg:w-4/12">
-              <div className="shadow-three dark:bg-gray-dark mb-10 mt-12 rounded-sm bg-white p-6 dark:shadow-none lg:mt-0">
+              <div className="mb-10 mt-12 rounded-sm bg-white p-6 shadow-three dark:bg-gray-dark dark:shadow-none lg:mt-0">
                 <div className="flex items-center justify-between">
                   <input
                     type="text"
                     placeholder="Search here..."
-                    className="border-stroke dark:text-body-color-dark dark:shadow-two mr-4 w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                    className="mr-4 w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:shadow-two dark:focus:border-primary dark:focus:shadow-none"
                   />
                   <button
                     aria-label="search button"
@@ -76,7 +107,7 @@ const BlogSidebarPage = () => {
                   </button>
                 </div>
               </div>
-              <div className="shadow-three dark:bg-gray-dark mb-10 rounded-sm bg-white dark:shadow-none">
+              <div className="mb-10 rounded-sm bg-white shadow-three dark:bg-gray-dark dark:shadow-none">
                 <h3 className="border-b border-body-color border-opacity-10 px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
                   Related Posts
                 </h3>
@@ -107,7 +138,7 @@ const BlogSidebarPage = () => {
                   </li>
                 </ul>
               </div>
-              <div className="shadow-three dark:bg-gray-dark mb-10 rounded-sm bg-white dark:shadow-none">
+              <div className="mb-10 rounded-sm bg-white shadow-three dark:bg-gray-dark dark:shadow-none">
                 <h3 className="border-b border-body-color border-opacity-10 px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
                   Popular Category
                 </h3>
@@ -154,7 +185,7 @@ const BlogSidebarPage = () => {
                   </li>
                 </ul>
               </div>
-              <div className="shadow-three dark:bg-gray-dark mb-10 rounded-sm bg-white dark:shadow-none">
+              <div className="mb-10 rounded-sm bg-white shadow-three dark:bg-gray-dark dark:shadow-none">
                 <h3 className="border-b border-body-color border-opacity-10 px-8 py-4 text-lg font-semibold text-black dark:border-white dark:border-opacity-10 dark:text-white">
                   Popular Tags
                 </h3>
