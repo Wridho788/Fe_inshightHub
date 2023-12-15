@@ -1,6 +1,7 @@
 # InstaHub
 
-![InstaHub Logo](/images/insighthub.png)
+![insighthub](https://github.com/Wridho788/Fe_inshightHub/assets/25151124/e10070b1-6566-4a41-a148-744fe0515015)
+
 
 Platform untuk Berbagi dan Menemukan Gambar Terbaik.
 
