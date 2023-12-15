@@ -1,6 +1,6 @@
 # InstaHub
 
-![InstaHub Logo](/images/logo/logo-instahub.svg)
+![InstaHub Logo](/images/insighthub.png)
 
 Platform untuk Berbagi dan Menemukan Gambar Terbaik.
 
